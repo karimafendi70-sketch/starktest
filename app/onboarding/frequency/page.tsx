@@ -41,7 +41,7 @@ export default function FrequencyPage() {
           className="text-center max-w-xl"
         >
           <h1 className="text-2xl font-bold mb-4">
-            Op de dagen dat u nicotine gebruikte, hoe vaak gebruikte u het?
+            Hoe vaak gebruikte je het gemiddeld per dag?
           </h1>
           <p className="text-muted-foreground mb-12">
             Gemiddeld, voordat je begon met bijhouden

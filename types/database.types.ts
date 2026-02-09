@@ -91,7 +91,7 @@ export interface Settings {
   id: string;
   user_id: string;
   notifications_enabled: boolean;
-  daily_reminder_time: string;
+  daily_reminder_time: string; // Format: "HH:MM:SS" (e.g., "09:00:00")
   weekly_summary: boolean;
   milestone_alerts: boolean;
   email_notifications: boolean;
