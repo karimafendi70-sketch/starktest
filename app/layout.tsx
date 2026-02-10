@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
 import { TrialBannerWrapper } from "./trial-banner-wrapper";
+import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Encrypted Journal - Private & Secure",
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <Providers>
           <TrialBannerWrapper />
+          <Header />
           {children}
         </Providers>
       </body>

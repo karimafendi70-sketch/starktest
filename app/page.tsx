@@ -35,8 +35,44 @@ export default function WelcomePage() {
         </div>
 
         {/* App Name */}
-        <h1 className="text-5xl font-bold mb-4">Your Personal Space</h1>
-        <p className="text-xl text-white/90 mb-2">Choose how you want to write</p>
+        <h1 className="text-5xl font-bold mb-4">Your Private, Encrypted Journal</h1>
+        <p className="text-xl text-white/90 mb-6">Write freely. Stay private. Always encrypted.</p>
+        
+        {/* Multi-User Feature Badge */}
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium mb-8">
+          <span>✨</span>
+          <span>Up to 5 Users • AES-256 Encryption • Offline First</span>
+        </div>
+      </motion.div>
+
+      {/* Go to Encrypted Diary Section */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="w-full max-w-2xl mb-12"
+      >
+        <div className="bg-white/10 backdrop-blur-md border-2 border-white/30 rounded-2xl p-8 text-center">
+          <div className="mb-6">
+            <Lock className="w-16 h-16 mx-auto mb-4 text-white" />
+            <h2 className="text-3xl font-bold mb-3">🔐 Access Your Encrypted Diary</h2>
+            <p className="text-white/80 text-lg">
+              Your private space with military-grade encryption
+            </p>
+          </div>
+          
+          <button
+            onClick={() => router.push("/users")}
+            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-purple-600 rounded-xl font-bold text-lg hover:bg-white/90 transition-all transform hover:scale-105"
+          >
+            Enter Your Private Space
+            <span className="text-2xl">→</span>
+          </button>
+          
+          <p className="mt-4 text-sm text-white/60">
+            Support for up to 5 different users on this device
+          </p>
+        </div>
       </motion.div>
 
       {/* Dual Mode Cards */}
@@ -58,8 +94,8 @@ export default function WelcomePage() {
               <FileText className="w-8 h-8 text-white" />
             </div>
           </div>
-          <h2 className="text-3xl font-bold mb-3">📝 Notes</h2>
-          <p className="text-white/80 mb-2">Quick & Simple</p>
+          <h2 className="text-3xl font-bold mb-3">📝 Quick Notes</h2>
+          <p className="text-white/80 mb-2">Simple & Fast</p>
           <p className="text-sm text-white/60 mb-6">
             Take quick notes without any password. Perfect for everyday thoughts and ideas.
           </p>
@@ -68,7 +104,7 @@ export default function WelcomePage() {
           </div>
         </motion.button>
 
-        {/* Diary Mode */}
+        {/* Diary Mode - Alternative Access */}
         <motion.button
           onClick={() => router.push("/journal")}
           whileHover={{ scale: 1.02, y: -5 }}
@@ -80,13 +116,13 @@ export default function WelcomePage() {
               <Lock className="w-8 h-8 text-white" />
             </div>
           </div>
-          <h2 className="text-3xl font-bold mb-3">🔐 Diary</h2>
-          <p className="text-white/80 mb-2">Private & Encrypted</p>
+          <h2 className="text-3xl font-bold mb-3">🔐 Legacy Diary</h2>
+          <p className="text-white/80 mb-2">Single-User Mode</p>
           <p className="text-sm text-white/60 mb-6">
-            Password-protected journal with AES-256 encryption. Your private thoughts, completely secure.
+            Original password-protected journal. Use the button above for multi-user access.
           </p>
           <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 rounded-lg font-semibold group-hover:bg-white/30 transition-colors">
-            Open Private Diary →
+            Open Legacy Diary →
           </div>
         </motion.button>
       </motion.div>
