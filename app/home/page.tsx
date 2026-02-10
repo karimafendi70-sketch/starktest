@@ -16,6 +16,9 @@ import {
   Sparkles,
 } from 'lucide-react';
 
+// Constants
+const ESTIMATED_WORDS_PER_ENTRY = 250;
+
 export default function HomePage() {
   const router = useRouter();
   const { currentUser } = useUser();
@@ -115,7 +118,7 @@ export default function HomePage() {
               </span>
             </div>
             <p className="text-3xl font-bold text-gray-900 dark:text-white">
-              {stats.totalEntries > 0 ? '~' + (stats.totalEntries * 250).toLocaleString() : '0'}
+              {stats.totalEntries > 0 ? '~' + (stats.totalEntries * ESTIMATED_WORDS_PER_ENTRY).toLocaleString() : '0'}
             </p>
           </div>
 

@@ -17,11 +17,13 @@ export function EncryptionProof({ isOpen, onClose, cryptoKey, salt }: Encryption
   const [encryptedData, setEncryptedData] = useState<string>('');
   const [decryptedData, setDecryptedData] = useState<string>('');
   const [isEncrypting, setIsEncrypting] = useState(false);
+  const [error, setError] = useState<string>('');
 
   const handleEncrypt = async () => {
     if (!cryptoKey || !salt) return;
     
     setIsEncrypting(true);
+    setError('');
     try {
       const { ciphertext, iv } = await encrypt(sampleText, cryptoKey);
       
@@ -37,6 +39,7 @@ export function EncryptionProof({ isOpen, onClose, cryptoKey, salt }: Encryption
       setDecryptedData(decrypted);
     } catch (error) {
       console.error('Encryption error:', error);
+      setError('Failed to encrypt/decrypt. Please try again.');
     }
     setIsEncrypting(false);
   };
@@ -90,6 +93,13 @@ export function EncryptionProof({ isOpen, onClose, cryptoKey, salt }: Encryption
               >
                 {isEncrypting ? 'Encrypting...' : '🔒 Encrypt Text'}
               </button>
+
+              {/* Error Message */}
+              {error && (
+                <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm">
+                  {error}
+                </div>
+              )}
 
               {/* Results Grid */}
               {encryptedData && (

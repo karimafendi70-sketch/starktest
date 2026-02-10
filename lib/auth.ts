@@ -1,28 +1,63 @@
 /**
  * Authentication utilities
- * Password hashing and validation using Web Crypto API
+ * Password hashing and validation using Web Crypto API with PBKDF2
  */
 
 /**
- * Hash a password using SHA-256
- * Note: This is NOT as secure as bcrypt for password storage,
- * but it's the best we can do in browser environment without external libraries
+ * Hash a password using PBKDF2 with SHA-256
+ * This provides strong protection against brute force attacks
  */
-export async function hashPassword(password: string): Promise<string> {
+export async function hashPassword(password: string, salt?: Uint8Array): Promise<string> {
   const encoder = new TextEncoder();
   const data = encoder.encode(password);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  
+  // Use provided salt or generate a new one
+  const passwordSalt = salt || crypto.getRandomValues(new Uint8Array(16));
+  
+  // Import password as key material
+  const keyMaterial = await crypto.subtle.importKey(
+    'raw',
+    data,
+    'PBKDF2',
+    false,
+    ['deriveBits']
+  );
+  
+  // Derive hash using PBKDF2 with 100,000 iterations
+  const hashBits = await crypto.subtle.deriveBits(
+    {
+      name: 'PBKDF2',
+      salt: passwordSalt.buffer as ArrayBuffer,
+      iterations: 100000,
+      hash: 'SHA-256',
+    },
+    keyMaterial,
+    256
+  );
+  
+  const hashArray = Array.from(new Uint8Array(hashBits));
   const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  return hashHex;
+  const saltHex = Array.from(passwordSalt).map(b => b.toString(16).padStart(2, '0')).join('');
+  
+  // Return salt:hash format
+  return `${saltHex}:${hashHex}`;
 }
 
 /**
  * Verify a password against a hash
  */
-export async function verifyPassword(password: string, hash: string): Promise<boolean> {
-  const passwordHash = await hashPassword(password);
-  return passwordHash === hash;
+export async function verifyPassword(password: string, storedHash: string): Promise<boolean> {
+  const [saltHex, hashHex] = storedHash.split(':');
+  if (!saltHex || !hashHex) return false;
+  
+  // Convert salt from hex
+  const salt = new Uint8Array(
+    saltHex.match(/.{2}/g)?.map(byte => parseInt(byte, 16)) || []
+  );
+  
+  // Hash the provided password with the stored salt
+  const passwordHash = await hashPassword(password, salt);
+  return passwordHash === storedHash;
 }
 
 /**
