@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 export default function LandingPage() {
   return (
     <main>
@@ -8,10 +10,10 @@ export default function LandingPage() {
         <nav className="flex justify-between items-center mb-20 max-w-6xl mx-auto">
           <div className="text-2xl font-bold">🔒 SecureJournal</div>
           <div className="flex gap-4">
-            <a href="/login" className="text-white hover:underline">Login</a>
-            <a href="/register" className="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold">
+            <Link href="/login" className="text-white hover:underline">Login</Link>
+            <Link href="/register" className="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold">
               Get Started
-            </a>
+            </Link>
           </div>
         </nav>
         
@@ -25,10 +27,10 @@ export default function LandingPage() {
               Military-grade encryption. Zero tracking.
             </p>
             <div className="flex gap-4">
-              <a href="/register" className="bg-white text-purple-600 px-8 py-4 rounded-xl font-semibold text-lg hover:scale-105 transition-transform inline-block">
+              <Link href="/register" className="bg-white text-purple-600 px-8 py-4 rounded-xl font-semibold text-lg hover:scale-105 transition-transform inline-block">
                 Start Free Trial →
-              </a>
-              <a href="#features" className="border-2 border-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-purple-600 transition-all inline-block">
+              </Link>
+              <a href="#features" className="border-2 border-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-purple-600 transition-all inline-block scroll-smooth">
                 Learn More ↓
               </a>
             </div>
@@ -130,9 +132,9 @@ export default function LandingPage() {
               <li className="flex items-center gap-3"><span className="text-green-500">✓</span> All themes</li>
               <li className="flex items-center gap-3"><span className="text-green-500">✓</span> Cancel anytime</li>
             </ul>
-            <a href="/register" className="block w-full bg-purple-600 text-white py-4 rounded-xl font-semibold hover:bg-purple-700">
+            <Link href="/register" className="block w-full bg-purple-600 text-white py-4 rounded-xl font-semibold hover:bg-purple-700">
               Start Free Trial →
-            </a>
+            </Link>
             <p className="text-sm text-gray-500 mt-4">No card required</p>
           </div>
         </div>

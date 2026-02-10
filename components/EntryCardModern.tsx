@@ -22,8 +22,7 @@ export default function EntryCardModern({ entry }: { entry: JournalEntry }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => router.push(`/journal/${entry.id}`)}
-      className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all p-6 cursor-pointer relative"
-      style={{ transform: isHovered ? 'translateY(-4px)' : 'translateY(0)' }}
+      className={`bg-white rounded-xl shadow-sm hover:shadow-lg transition-all p-6 cursor-pointer relative ${isHovered ? '-translate-y-1' : 'translate-y-0'}`}
     >
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
@@ -41,8 +40,8 @@ export default function EntryCardModern({ entry }: { entry: JournalEntry }) {
       
       <div className="flex items-center justify-between">
         <div className="flex gap-2">
-          {entry.tags?.slice(0, 3).map((tag: string) => (
-            <span key={tag} className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm">
+          {entry.tags?.slice(0, 3).map((tag: string, index: number) => (
+            <span key={`${entry.id}-${tag}-${index}`} className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm">
               #{tag}
             </span>
           ))}
