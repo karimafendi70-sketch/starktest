@@ -43,11 +43,23 @@ const config: Config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        // Book reading mode colors
+        book: {
+          bg: "#F5F5DC", // Beige
+          page: "#FFFDD0", // Cream
+          text: "#3E2723", // Dark brown
+          accent: "#8B7355", // Brown
+          shadow: "rgba(139, 115, 85, 0.2)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        crimson: ["var(--font-crimson)", "Georgia", "serif"],
+        merriweather: ["var(--font-merriweather)", "Georgia", "serif"],
       },
     },
   },
