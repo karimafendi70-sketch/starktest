@@ -2,6 +2,16 @@
 
 A beautiful, privacy-focused encrypted journal application with multi-user support. Write freely knowing your thoughts are protected with military-grade AES-256 encryption. Completely offline - no cloud, no tracking, no data ever leaves your device.
 
+## 🌐 Try It Live
+
+Want to see the app in action? Deploy your own instance in seconds:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/karimafendi70-sketch/starktest)
+
+Or see the [Quick Deploy Guide](./QUICK_DEPLOY.md) for step-by-step instructions.
+
+> **Note**: This app stores all data locally in your browser. Each deployment/domain has its own isolated storage.
+
 ## 🔐 Privacy & Security First
 
 - **AES-256-GCM Encryption**: Military-grade encryption for all journal entries
