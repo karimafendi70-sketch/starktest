@@ -3,7 +3,13 @@
  * Uses AES-256-GCM for encrypting photo data
  */
 
-import { encryptData, decryptData } from './crypto';
+import { 
+  encrypt, 
+  decrypt, 
+  arrayBufferToBase64, 
+  base64ToArrayBuffer,
+  uint8ArrayToBase64 
+} from './crypto';
 
 /**
  * Encrypt photo data
@@ -15,8 +21,11 @@ export async function encryptPhoto(
   // Remove data URL prefix to get just the base64 data
   const base64Data = photoDataUrl.split(',')[1] || photoDataUrl;
   
-  const result = await encryptData(base64Data, cryptoKey);
-  return result;
+  const { ciphertext, iv } = await encrypt(base64Data, cryptoKey);
+  return {
+    encrypted: arrayBufferToBase64(ciphertext),
+    iv: uint8ArrayToBase64(iv),
+  };
 }
 
 /**
@@ -27,7 +36,9 @@ export async function decryptPhoto(
   iv: string,
   cryptoKey: CryptoKey
 ): Promise<string> {
-  const decrypted = await decryptData(encryptedData, iv, cryptoKey);
+  const ciphertext = base64ToArrayBuffer(encryptedData);
+  const ivArray = base64ToArrayBuffer(iv);
+  const decrypted = await decrypt(ciphertext, cryptoKey, new Uint8Array(ivArray));
   
   // Return as data URL
   return `data:image/jpeg;base64,${decrypted}`;
@@ -42,8 +53,11 @@ export async function encryptThumbnail(
 ): Promise<{ encrypted: string; iv: string }> {
   const base64Data = thumbnailDataUrl.split(',')[1] || thumbnailDataUrl;
   
-  const result = await encryptData(base64Data, cryptoKey);
-  return result;
+  const { ciphertext, iv } = await encrypt(base64Data, cryptoKey);
+  return {
+    encrypted: arrayBufferToBase64(ciphertext),
+    iv: uint8ArrayToBase64(iv),
+  };
 }
 
 /**
@@ -54,7 +68,9 @@ export async function decryptThumbnail(
   iv: string,
   cryptoKey: CryptoKey
 ): Promise<string> {
-  const decrypted = await decryptData(encryptedData, iv, cryptoKey);
+  const ciphertext = base64ToArrayBuffer(encryptedData);
+  const ivArray = base64ToArrayBuffer(iv);
+  const decrypted = await decrypt(ciphertext, cryptoKey, new Uint8Array(ivArray));
   
   return `data:image/jpeg;base64,${decrypted}`;
 }

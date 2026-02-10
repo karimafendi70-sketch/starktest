@@ -8,10 +8,12 @@ import { Photo } from "@/types/photo";
 import { PhotoLightbox } from "@/components/PhotoLightbox";
 import { getAllPhotosForUser } from "@/lib/photo-storage";
 import { useAuth } from "@/lib/auth-context";
+import { useUser } from "@/lib/user-context";
 
 export function PhotoGallery() {
   const router = useRouter();
-  const { cryptoKey, currentUser } = useAuth();
+  const { cryptoKey } = useAuth();
+  const { currentUser } = useUser();
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);

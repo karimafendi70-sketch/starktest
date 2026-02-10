@@ -10,7 +10,7 @@ import {
   isCameraSupported,
 } from "@/lib/camera";
 
-interface CameraCapture Props {
+interface CameraCaptureProps {
   onCapture: (photoDataUrl: string) => void;
   onClose: () => void;
 }
