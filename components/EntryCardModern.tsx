@@ -132,17 +132,9 @@ export default function EntryCardModern({ entry }: EntryCardModernProps) {
               router.push(`/journal/${entry.id}/edit`);
             }}
             className="p-2 bg-white rounded-lg shadow-md hover:bg-gray-50 transition-colors"
+            aria-label="Edit entry"
           >
             ✏️
-          </button>
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              // Delete logic would go here
-            }}
-            className="p-2 bg-white rounded-lg shadow-md hover:bg-red-50 transition-colors"
-          >
-            🗑️
           </button>
         </div>
       )}

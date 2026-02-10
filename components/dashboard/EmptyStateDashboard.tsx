@@ -16,7 +16,7 @@ export default function EmptyStateDashboard({ user }: EmptyStateDashboardProps) 
           Welcome, {user.username}! 👋
         </h1>
         <p className="text-xl text-gray-600 mb-12">
-          Let&apos;s write your first entry
+          Let&apos;s write your first entry.
         </p>
         
         {/* Big CTA */}

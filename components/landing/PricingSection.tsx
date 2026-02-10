@@ -54,8 +54,9 @@ export default function PricingSection() {
           <p className="text-center text-sm text-gray-500 mt-4">No card required</p>
           
           <div className="mt-6 pt-6 border-t text-center">
-            <p className="text-sm text-gray-600 mb-2">Or save 50% with annual</p>
+            <p className="text-sm text-gray-600 mb-2">Or save 50% with annual plan</p>
             <p className="text-2xl font-bold">€29.99/year 🎉</p>
+            <p className="text-xs text-gray-500 mt-1">(50% off - normally €59.88/year)</p>
           </div>
         </div>
       </div>
