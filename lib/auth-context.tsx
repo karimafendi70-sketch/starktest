@@ -23,12 +23,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null);
   const [salt, setSalt] = useState<Uint8Array | null>(null);
   const [lastActivity, setLastActivity] = useState(Date.now());
+  const [isMounted, setIsMounted] = useState(false);
 
   // Auto-lock after 15 minutes of inactivity
   const AUTO_LOCK_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
 
+  // Track if component is mounted (client-side)
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // Check if app is already setup
   useEffect(() => {
+    if (!isMounted) return;
+    
     const checkSetup = async () => {
       try {
         const config = await getConfig();
@@ -41,7 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     };
     checkSetup();
-  }, []);
+  }, [isMounted]);
 
   // Auto-lock timer
   useEffect(() => {

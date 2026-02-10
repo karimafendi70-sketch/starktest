@@ -44,6 +44,12 @@ export interface AppConfig {
  */
 export function openDB(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
+    // Check if we're in a browser environment
+    if (typeof window === 'undefined' || typeof indexedDB === 'undefined') {
+      reject(new Error('IndexedDB is not available in this environment'));
+      return;
+    }
+    
     const request = indexedDB.open(DB_NAME, DB_VERSION);
 
     request.onerror = () => reject(request.error);
