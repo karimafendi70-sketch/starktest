@@ -8,6 +8,7 @@ import { useTheme } from "@/lib/theme-context";
 import { motion, AnimatePresence } from "framer-motion";
 import { JournalEntry, MoodType } from "@/types/journal.types";
 import { deleteAllData, exportData, importData } from "@/lib/db";
+import { calculateStreak } from "@/lib/streak";
 import {
   Moon,
   Sun,
@@ -232,6 +233,13 @@ export default function JournalPage() {
 
   // Get stats
   const stats = getStats();
+  
+  // Calculate additional stats
+  const streakData = calculateStreak(entries);
+  const now = new Date();
+  const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const entriesThisMonth = entries.filter(entry => new Date(entry.date) >= oneMonthAgo).length;
+  const averagePerWeek = entries.length > 0 ? (entries.length / Math.max(1, Math.ceil((now.getTime() - new Date(entries[entries.length - 1]?.date || now).getTime()) / (7 * 24 * 60 * 60 * 1000)))) : 0;
 
   if (!isAuthenticated) {
     return null;
@@ -452,23 +460,23 @@ export default function JournalPage() {
             {/* Streak Counter */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <StreakCounter
-                currentStreak={stats.currentStreak}
-                longestStreak={stats.longestStreak}
+                currentStreak={streakData.currentStreak}
+                longestStreak={streakData.longestStreak}
               />
               <div className="bg-card border border-border rounded-xl p-6">
                 <h3 className="text-lg font-semibold mb-2 text-foreground">Statistics</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <div className="flex justify-between">
                     <span>Total Entries:</span>
-                    <span className="font-semibold text-foreground">{stats.totalEntries}</span>
+                    <span className="font-semibold text-foreground">{stats.totalEntries || 0}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>This Month:</span>
-                    <span className="font-semibold text-foreground">{stats.thisMonth}</span>
+                    <span className="font-semibold text-foreground">{entriesThisMonth}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Avg per Week:</span>
-                    <span className="font-semibold text-foreground">{stats.averagePerWeek.toFixed(1)}</span>
+                    <span className="font-semibold text-foreground">{averagePerWeek.toFixed(1)}</span>
                   </div>
                 </div>
               </div>

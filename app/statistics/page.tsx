@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useJournal } from '@/lib/journal-context';
+import { calculateStreak } from '@/lib/streak';
 import { StreakCounter } from '@/components/StreakCounter';
 import { CalendarHeatmap } from '@/components/CalendarHeatmap';
 import { 
@@ -19,6 +20,9 @@ export default function StatisticsPage() {
   const router = useRouter();
   const { entries, getStats } = useJournal();
   const stats = getStats();
+
+  // Calculate streak data
+  const streakData = calculateStreak(entries);
 
   // Calculate additional stats
   const totalWords = entries.reduce((sum, entry) => {
@@ -151,8 +155,8 @@ export default function StatisticsPage() {
           className="mb-12"
         >
           <StreakCounter
-            currentStreak={stats.currentStreak}
-            longestStreak={stats.longestStreak}
+            currentStreak={streakData.currentStreak}
+            longestStreak={streakData.longestStreak}
           />
         </motion.div>
 
