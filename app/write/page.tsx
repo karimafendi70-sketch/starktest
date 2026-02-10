@@ -65,7 +65,7 @@ export default function WritePage() {
           localStorage.removeItem('draft_entry');
         }
       } catch (error) {
-        console.error('Failed to parse draft:', error);
+        console.error('Failed to parse draft:', error, 'Draft content:', draft);
         localStorage.removeItem('draft_entry');
       }
     }
@@ -171,8 +171,9 @@ export default function WritePage() {
   };
 
   const handlePhotoUpload = (photoDataUrls: string[]) => {
-    if (formData.photos.length + photoDataUrls.length > 5) {
-      alert('Maximum 5 photos allowed per entry');
+    const remainingSlots = 5 - formData.photos.length;
+    if (remainingSlots <= 0 || photoDataUrls.length > remainingSlots) {
+      alert(`Maximum 5 photos allowed per entry. You can add ${remainingSlots} more.`);
       return;
     }
     setFormData({
@@ -215,7 +216,7 @@ export default function WritePage() {
               <WordCounter text={formData.content} showReadingTime={false} />
               {lastSaved && (
                 <span className="text-sm text-gray-500">
-                  Draft saved at {format(lastSaved, 'HH:mm')}
+                  Draft saved at {format(lastSaved, 'h:mm a')}
                 </span>
               )}
             </div>
@@ -231,6 +232,7 @@ export default function WritePage() {
             value={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             className="w-full text-3xl font-bold mb-6 border-none outline-none focus:ring-0 placeholder-gray-400"
+            aria-label="Entry title"
           />
 
           {/* Content Textarea */}
@@ -239,6 +241,7 @@ export default function WritePage() {
             value={formData.content}
             onChange={(e) => setFormData({ ...formData, content: e.target.value })}
             className="w-full min-h-[400px] border-none outline-none focus:ring-2 focus:ring-purple-500 rounded-lg p-4 resize-none placeholder-gray-400 transition-all duration-200"
+            aria-label="Entry content"
           />
         </div>
 
