@@ -1,0 +1,66 @@
+/**
+ * Custom styles for book reading mode
+ * Provides vintage, cozy aesthetic with paper texture effects
+ */
+
+/* Google Fonts import */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+
+/* Book mode containers */
+.book-mode {
+  font-family: 'Crimson Text', Georgia, serif;
+  background-color: #f5f5dc; /* Warm beige */
+}
+
+.book-mode.dark {
+  background-color: #1a1614; /* Warm black for night reading */
+}
+
+/* Book page styles */
+.book-page {
+  background-color: #fffdd0; /* Cream */
+  color: #3e2723; /* Dark brown */
+  line-height: 1.8;
+  font-size: 18px;
+}
+
+.book-page.dark {
+  background-color: #2d2520;
+  color: #d4a574; /* Warm amber */
+}
+
+/* Paper texture overlay */
+.paper-texture {
+  background-image: 
+    linear-gradient(90deg, rgba(139, 115, 85, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(139, 115, 85, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Scrollbar styling for book mode */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: rgba(139, 115, 85, 0.1);
+  border-radius: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(139, 115, 85, 0.3);
+  border-radius: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 115, 85, 0.5);
+}
+
+/* Typography enhancements */
+.font-crimson {
+  font-family: 'Crimson Text', Georgia, serif;
+}
+
+.font-merriweather {
+  font-family: 'Merriweather', Georgia, serif;
+}
