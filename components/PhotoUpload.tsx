@@ -25,7 +25,7 @@ export function PhotoUpload({ onUpload, maxPhotos = 10 }: PhotoUploadProps) {
     // Validate files
     const validFiles = fileArray.filter(file => {
       if (!isValidImageFile(file)) {
-        setError(`Invalid file: ${file.name}. Only JPEG, PNG, and WebP under 10MB allowed.`);
+        setError(`Invalid file: ${file.name}. Only JPEG, PNG, and WebP under 5MB allowed.`);
         return false;
       }
       return true;

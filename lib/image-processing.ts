@@ -165,7 +165,7 @@ export function fileToDataURL(file: File): Promise<string> {
  */
 export function isValidImageFile(file: File): boolean {
   const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
-  const maxSize = 10 * 1024 * 1024; // 10MB
+  const maxSize = 5 * 1024 * 1024; // 5MB
 
   return validTypes.includes(file.type) && file.size <= maxSize;
 }
