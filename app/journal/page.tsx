@@ -30,8 +30,16 @@ import {
   Cloud,
   List,
   Book,
+  Camera,
+  Mic,
+  Image,
 } from "lucide-react";
 import { BookView } from "@/components/BookView";
+import { PhotoUpload } from "@/components/PhotoUpload";
+import { CameraCapture } from "@/components/CameraCapture";
+import { VoiceInput } from "@/components/VoiceInput";
+import { StreakCounter } from "@/components/StreakCounter";
+import { CalendarHeatmap } from "@/components/CalendarHeatmap";
 
 const MoodIcon = ({ mood, className = "w-5 h-5" }: { mood: MoodType; className?: string }) => {
   const icons = {
@@ -63,6 +71,9 @@ export default function JournalPage() {
   const [editorTags, setEditorTags] = useState<string[]>([]);
   const [editorDate, setEditorDate] = useState("");
   const [tagInput, setTagInput] = useState("");
+  const [editorPhotos, setEditorPhotos] = useState<string[]>([]);
+  const [showCamera, setShowCamera] = useState(false);
+  const [showPhotoUpload, setShowPhotoUpload] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -82,6 +93,7 @@ export default function JournalPage() {
     setEditorMood("neutral");
     setEditorTags([]);
     setEditorDate(new Date().toISOString().split("T")[0]);
+    setEditorPhotos([]);
     setView("editor");
   };
 
@@ -92,6 +104,7 @@ export default function JournalPage() {
     setEditorMood(entry.mood);
     setEditorTags(entry.tags);
     setEditorDate(entry.date);
+    setEditorPhotos([]);
     setView("editor");
   };
 
@@ -435,7 +448,43 @@ export default function JournalPage() {
 
         {/* Content Area */}
         {view === "list" && (
-          <div className="space-y-4">
+          <div className="space-y-6">
+            {/* Streak Counter */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <StreakCounter
+                currentStreak={stats.currentStreak}
+                longestStreak={stats.longestStreak}
+              />
+              <div className="bg-card border border-border rounded-xl p-6">
+                <h3 className="text-lg font-semibold mb-2 text-foreground">Statistics</h3>
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <div className="flex justify-between">
+                    <span>Total Entries:</span>
+                    <span className="font-semibold text-foreground">{stats.totalEntries}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>This Month:</span>
+                    <span className="font-semibold text-foreground">{stats.thisMonth}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Avg per Week:</span>
+                    <span className="font-semibold text-foreground">{stats.averagePerWeek.toFixed(1)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Calendar Heatmap */}
+            <div className="bg-card border border-border rounded-xl p-6">
+              <CalendarHeatmap
+                entries={entries}
+                onDateClick={(date) => {
+                  const entry = entries.find(e => e.date.startsWith(date));
+                  if (entry) handleEditEntry(entry);
+                }}
+              />
+            </div>
+
             {loading ? (
               <div className="text-center py-12 text-muted-foreground">Loading...</div>
             ) : displayedEntries.length === 0 ? (
@@ -575,13 +624,90 @@ export default function JournalPage() {
 
               <div>
                 <label className="block text-sm font-medium mb-2 text-foreground">Content</label>
-                <textarea
-                  value={editorContent}
-                  onChange={(e) => setEditorContent(e.target.value)}
-                  placeholder="Write your thoughts..."
-                  rows={12}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none text-foreground"
-                />
+                <div className="space-y-2">
+                  <textarea
+                    value={editorContent}
+                    onChange={(e) => setEditorContent(e.target.value)}
+                    placeholder="Write your thoughts..."
+                    rows={12}
+                    className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none text-foreground"
+                  />
+                  
+                  {/* Voice Input */}
+                  <div className="flex gap-2">
+                    <VoiceInput
+                      onTranscript={(text) => setEditorContent(prev => prev + text)}
+                      language="nl-NL"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Photos Section */}
+              <div>
+                <label className="block text-sm font-medium mb-2 text-foreground">Photos</label>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowPhotoUpload(!showPhotoUpload)}
+                    className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+                  >
+                    <Image className="w-4 h-4" />
+                    Upload Photos
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowCamera(!showCamera)}
+                    className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/90 transition-colors"
+                  >
+                    <Camera className="w-4 h-4" />
+                    Take Photo
+                  </button>
+                </div>
+
+                {showPhotoUpload && (
+                  <div className="mt-4">
+                    <PhotoUpload
+                      onUpload={(photos) => {
+                        setEditorPhotos(prev => [...prev, ...photos]);
+                        setShowPhotoUpload(false);
+                      }}
+                      maxPhotos={10}
+                    />
+                  </div>
+                )}
+
+                {showCamera && (
+                  <div className="mt-4">
+                    <CameraCapture
+                      onCapture={(photo) => {
+                        setEditorPhotos(prev => [...prev, photo]);
+                        setShowCamera(false);
+                      }}
+                      onClose={() => setShowCamera(false)}
+                    />
+                  </div>
+                )}
+
+                {editorPhotos.length > 0 && (
+                  <div className="mt-4 grid grid-cols-3 gap-2">
+                    {editorPhotos.map((photo, index) => (
+                      <div key={index} className="relative aspect-square">
+                        <img
+                          src={photo}
+                          alt={`Photo ${index + 1}`}
+                          className="w-full h-full object-cover rounded-lg"
+                        />
+                        <button
+                          onClick={() => setEditorPhotos(prev => prev.filter((_, i) => i !== index))}
+                          className="absolute top-1 right-1 p-1 bg-destructive text-destructive-foreground rounded-full hover:bg-destructive/90"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div>
@@ -644,24 +770,13 @@ export default function JournalPage() {
         {view === "calendar" && (
           <div className="bg-card border border-border rounded-xl p-6">
             <h2 className="text-2xl font-bold mb-6 text-foreground">Calendar View</h2>
-            <div className="grid grid-cols-7 gap-4">
-              {/* Simple calendar - showing days with entries */}
-              {entries.map((entry) => (
-                <div
-                  key={entry.id}
-                  className="p-3 bg-primary/10 border border-primary/20 rounded-lg cursor-pointer hover:bg-primary/20 transition-colors"
-                  onClick={() => handleEditEntry(entry)}
-                >
-                  <div className="text-xs text-muted-foreground mb-1">
-                    {new Date(entry.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <MoodIcon mood={entry.mood} className="w-4 h-4" />
-                    <span className="text-xs font-medium truncate text-foreground">{entry.title}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <CalendarHeatmap
+              entries={entries}
+              onDateClick={(date) => {
+                const entry = entries.find(e => e.date.startsWith(date));
+                if (entry) handleEditEntry(entry);
+              }}
+            />
           </div>
         )}
 
