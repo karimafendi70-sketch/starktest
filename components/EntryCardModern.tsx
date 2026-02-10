@@ -174,7 +174,9 @@ export function EntryCardModern({ entry, onDelete }: EntryCardModernProps) {
       </div>
 
       {/* Gradient Border on Hover */}
-      <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border-2 border-transparent bg-gradient-to-br from-purple-500 to-blue-500 bg-clip-padding -z-10" />
+      <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+        <div className="absolute inset-0 rounded-xl border-2 border-transparent bg-gradient-to-br from-purple-500 to-blue-500" style={{ zIndex: -1 }} />
+      </div>
     </motion.div>
   );
 }

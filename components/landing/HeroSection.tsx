@@ -34,8 +34,8 @@ export function HeroSection() {
 
           {/* Social Proof */}
           <div className="mb-10">
-            <p className="text-lg text-white/80">
-              ⭐⭐⭐⭐⭐ 10,000+ people trust us
+            <p className="text-lg text-white/80" aria-label="5 star rating - 10,000+ people trust us">
+              <span aria-hidden="true">⭐⭐⭐⭐⭐</span> 10,000+ people trust us
             </p>
           </div>
 
@@ -50,11 +50,12 @@ export function HeroSection() {
               Start Free Trial
             </motion.button>
             <motion.button
+              onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-white/10 backdrop-blur-md border-2 border-white/30 text-white rounded-xl font-bold text-lg hover:bg-white/20 transition-all"
             >
-              Watch Demo
+              Learn More
             </motion.button>
           </div>
 
