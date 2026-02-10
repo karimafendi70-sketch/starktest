@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { X, Check } from "lucide-react";
 import { Note } from "@/lib/notes-context";
@@ -12,24 +12,16 @@ interface NoteEditorProps {
 }
 
 export function NoteEditor({ note, onSave, onCancel }: NoteEditorProps) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
-  useEffect(() => {
-    if (note) {
-      setTitle(note.title);
-      setContent(note.content);
-    } else {
-      setTitle("");
-      setContent("");
-    }
-  }, [note]);
+  const [title, setTitle] = useState(note?.title || "");
+  const [content, setContent] = useState(note?.content || "");
+  const [error, setError] = useState("");
 
   const handleSave = () => {
     if (!title.trim() || !content.trim()) {
-      alert("Please fill in both title and content");
+      setError("Please fill in both title and content");
       return;
     }
+    setError("");
     onSave(title, content);
   };
 
@@ -51,13 +43,22 @@ export function NoteEditor({ note, onSave, onCancel }: NoteEditorProps) {
         </button>
       </div>
 
+      {error && (
+        <div className="mb-4 p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
+          {error}
+        </div>
+      )}
+
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium mb-2 text-foreground">Title</label>
           <input
             type="text"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              setError("");
+            }}
             placeholder="Note title..."
             className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
             autoFocus
@@ -68,7 +69,10 @@ export function NoteEditor({ note, onSave, onCancel }: NoteEditorProps) {
           <label className="block text-sm font-medium mb-2 text-foreground">Content</label>
           <textarea
             value={content}
-            onChange={(e) => setContent(e.target.value)}
+            onChange={(e) => {
+              setContent(e.target.value);
+              setError("");
+            }}
             placeholder="Write your note..."
             rows={12}
             className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none text-foreground"

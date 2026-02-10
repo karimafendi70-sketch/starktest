@@ -1,4 +1,4 @@
-"use client";
+import { useCallback } from "react";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -20,19 +20,19 @@ export function BookView({ entries }: BookViewProps) {
     setCurrentPage(0);
   }, [entries]);
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     if (currentPage > 0) {
       setDirection(-1);
       setCurrentPage(currentPage - 1);
     }
-  };
+  }, [currentPage]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentPage < entries.length - 1) {
       setDirection(1);
       setCurrentPage(currentPage + 1);
     }
-  };
+  }, [currentPage, entries.length]);
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -46,7 +46,7 @@ export function BookView({ entries }: BookViewProps) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentPage, entries.length]);
+  }, [handlePrevious, handleNext]);
 
   if (entries.length === 0) {
     return (

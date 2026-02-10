@@ -30,8 +30,13 @@ export function TrialProvider({ children }: { children: React.ReactNode }) {
     initializeTrial();
     refreshStatus();
 
-    // Refresh status every minute
-    const interval = setInterval(refreshStatus, 60000);
+    // Refresh status every minute only if trial is active and not subscribed
+    const interval = setInterval(() => {
+      const currentStatus = getTrialStatus();
+      if (!currentStatus.hasSubscription && currentStatus.isActive) {
+        refreshStatus();
+      }
+    }, 60000);
     return () => clearInterval(interval);
   }, []);
 
