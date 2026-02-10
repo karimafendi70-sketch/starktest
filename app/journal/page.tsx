@@ -28,7 +28,10 @@ import {
   Meh,
   Zap,
   Cloud,
+  List,
+  Book,
 } from "lucide-react";
+import { BookView } from "@/components/BookView";
 
 const MoodIcon = ({ mood, className = "w-5 h-5" }: { mood: MoodType; className?: string }) => {
   const icons = {
@@ -47,7 +50,7 @@ export default function JournalPage() {
   const { entries, loading, addEntry, updateEntry, removeEntry, searchEntries, filterByTag, getStats } = useJournal();
   const { theme, toggleTheme } = useTheme();
 
-  const [view, setView] = useState<"list" | "editor" | "calendar">("list");
+  const [view, setView] = useState<"list" | "editor" | "calendar" | "book">("list");
   const [selectedEntry, setSelectedEntry] = useState<JournalEntry | null>(null);
   const [showSettings, setShowSettings] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -347,23 +350,35 @@ export default function JournalPage() {
           <div className="flex gap-2">
             <button
               onClick={() => setView("list")}
-              className={`px-4 py-2 rounded-lg transition-colors ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 view === "list"
                   ? "bg-primary text-primary-foreground"
                   : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
               }`}
             >
-              All Entries
+              <List className="w-4 h-4" />
+              List View
+            </button>
+            <button
+              onClick={() => setView("book")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                view === "book"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              }`}
+            >
+              <Book className="w-4 h-4" />
+              Book View
             </button>
             <button
               onClick={() => setView("calendar")}
-              className={`px-4 py-2 rounded-lg transition-colors ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 view === "calendar"
                   ? "bg-primary text-primary-foreground"
                   : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
               }`}
             >
-              <Calendar className="w-4 h-4 inline mr-2" />
+              <Calendar className="w-4 h-4" />
               Calendar
             </button>
           </div>
@@ -647,6 +662,12 @@ export default function JournalPage() {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {view === "book" && (
+          <div>
+            <BookView entries={displayedEntries} />
           </div>
         )}
       </div>
