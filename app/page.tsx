@@ -1,142 +1,144 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import { FileText, Lock } from "lucide-react";
+import Link from 'next/link';
 
-export default function WelcomePage() {
-  const router = useRouter();
-
+export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 flex flex-col items-center justify-center p-6 text-white">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-12"
-      >
-        {/* Logo */}
-        <div className="mb-8 flex justify-center">
-          <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30">
-            <svg
-              className="w-12 h-12 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-              />
-            </svg>
+    <main>
+      {/* Hero Section - Purple gradient background */}
+      <section className="min-h-screen bg-gradient-to-br from-purple-600 to-blue-600 text-white p-6">
+        <nav className="flex justify-between items-center mb-20 max-w-6xl mx-auto">
+          <div className="text-2xl font-bold">🔒 SecureJournal</div>
+          <div className="flex gap-4">
+            <Link href="/login" className="text-white hover:underline">Login</Link>
+            <Link href="/register" className="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold">
+              Get Started
+            </Link>
           </div>
-        </div>
-
-        {/* App Name */}
-        <h1 className="text-5xl font-bold mb-4">Your Private, Encrypted Journal</h1>
-        <p className="text-xl text-white/90 mb-6">Write freely. Stay private. Always encrypted.</p>
+        </nav>
         
-        {/* Multi-User Feature Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium mb-8">
-          <span>✨</span>
-          <span>Up to 5 Users • AES-256 Encryption • Offline First</span>
-        </div>
-      </motion.div>
-
-      {/* Go to Encrypted Diary Section */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className="w-full max-w-2xl mb-12"
-      >
-        <div className="bg-white/10 backdrop-blur-md border-2 border-white/30 rounded-2xl p-8 text-center">
-          <div className="mb-6">
-            <Lock className="w-16 h-16 mx-auto mb-4 text-white" />
-            <h2 className="text-3xl font-bold mb-3">🔐 Access Your Encrypted Diary</h2>
-            <p className="text-white/80 text-lg">
-              Your private space with military-grade encryption
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h1 className="text-6xl font-bold mb-6">
+              Your Private Journal,<br/>Encrypted & Beautiful ✨
+            </h1>
+            <p className="text-xl mb-8 text-purple-100">
+              Write freely. Everything stays private.<br/>
+              Military-grade encryption. Zero tracking.
             </p>
+            <div className="flex gap-4">
+              <Link href="/register" className="bg-white text-purple-600 px-8 py-4 rounded-xl font-semibold text-lg hover:scale-105 transition-transform inline-block">
+                Start Free Trial →
+              </Link>
+              <a href="#features" className="border-2 border-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-purple-600 transition-all inline-block scroll-smooth">
+                Learn More ↓
+              </a>
+            </div>
+            <p className="text-sm text-purple-200 mt-4">3-day trial, no card required</p>
           </div>
-          
-          <button
-            onClick={() => router.push("/users")}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-purple-600 rounded-xl font-bold text-lg hover:bg-white/90 transition-all transform hover:scale-105"
-          >
-            Enter Your Private Space
-            <span className="text-2xl">→</span>
-          </button>
-          
-          <p className="mt-4 text-sm text-white/60">
-            Support for up to 5 different users on this device
-          </p>
+          <div className="bg-white rounded-2xl p-4 shadow-2xl">
+            <div className="aspect-video bg-gradient-to-br from-purple-100 to-blue-100 rounded-xl flex items-center justify-center text-gray-500">
+              Screenshot Placeholder
+            </div>
+          </div>
         </div>
-      </motion.div>
-
-      {/* Dual Mode Cards */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6"
-      >
-        {/* Notes Mode */}
-        <motion.button
-          onClick={() => router.push("/notes")}
-          whileHover={{ scale: 1.02, y: -5 }}
-          whileTap={{ scale: 0.98 }}
-          className="bg-white/10 backdrop-blur-md border-2 border-white/30 rounded-2xl p-8 text-center hover:bg-white/20 transition-all group"
-        >
-          <div className="mb-6 flex justify-center">
-            <div className="w-16 h-16 bg-blue-500/30 rounded-xl flex items-center justify-center group-hover:bg-blue-500/40 transition-colors">
-              <FileText className="w-8 h-8 text-white" />
+        
+        <p className="text-center mt-16 text-lg">💙 10,000+ people trust us with their memories</p>
+      </section>
+      
+      {/* Features Section - 3 columns */}
+      <section id="features" className="py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-4xl font-bold text-center mb-16">Why Choose Us?</h2>
+          <div className="grid md:grid-cols-3 gap-12">
+            <div className="text-center">
+              <div className="w-20 h-20 mx-auto mb-6 bg-blue-100 rounded-2xl flex items-center justify-center text-4xl">
+                🔒
+              </div>
+              <h3 className="text-2xl font-semibold mb-4">Truly Private</h3>
+              <p className="text-gray-600">
+                Military-grade AES-256 encryption. Your data stays on your device or encrypted in cloud.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-20 h-20 mx-auto mb-6 bg-purple-100 rounded-2xl flex items-center justify-center text-4xl">
+                📸
+              </div>
+              <h3 className="text-2xl font-semibold mb-4">Photo Journaling</h3>
+              <p className="text-gray-600">
+                Encrypted photos with camera access. Voice-to-text transcription.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-20 h-20 mx-auto mb-6 bg-pink-100 rounded-2xl flex items-center justify-center text-4xl">
+                📖
+              </div>
+              <h3 className="text-2xl font-semibold mb-4">Beautiful Reading</h3>
+              <p className="text-gray-600">
+                Cozy book mode with vintage design. 6 gorgeous themes.
+              </p>
             </div>
           </div>
-          <h2 className="text-3xl font-bold mb-3">📝 Quick Notes</h2>
-          <p className="text-white/80 mb-2">Simple & Fast</p>
-          <p className="text-sm text-white/60 mb-6">
-            Take quick notes without any password. Perfect for everyday thoughts and ideas.
-          </p>
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 rounded-lg font-semibold group-hover:bg-white/30 transition-colors">
-            Start Taking Notes →
-          </div>
-        </motion.button>
-
-        {/* Diary Mode - Alternative Access */}
-        <motion.button
-          onClick={() => router.push("/journal")}
-          whileHover={{ scale: 1.02, y: -5 }}
-          whileTap={{ scale: 0.98 }}
-          className="bg-white/10 backdrop-blur-md border-2 border-white/30 rounded-2xl p-8 text-center hover:bg-white/20 transition-all group"
-        >
-          <div className="mb-6 flex justify-center">
-            <div className="w-16 h-16 bg-purple-500/30 rounded-xl flex items-center justify-center group-hover:bg-purple-500/40 transition-colors">
-              <Lock className="w-8 h-8 text-white" />
+        </div>
+      </section>
+      
+      {/* Testimonials */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-4xl font-bold text-center mb-16">Loved by Thousands</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white p-8 rounded-2xl shadow-sm">
+              <div className="text-yellow-500 text-2xl mb-4">⭐⭐⭐⭐⭐</div>
+              <p className="text-gray-700 mb-4">
+                "Finally, a journal app that respects my privacy!"
+              </p>
+              <p className="text-sm text-gray-500">- Sarah K.</p>
+            </div>
+            <div className="bg-white p-8 rounded-2xl shadow-sm">
+              <div className="text-yellow-500 text-2xl mb-4">⭐⭐⭐⭐⭐</div>
+              <p className="text-gray-700 mb-4">
+                "The book mode is gorgeous. Best journal app ever."
+              </p>
+              <p className="text-sm text-gray-500">- John M.</p>
+            </div>
+            <div className="bg-white p-8 rounded-2xl shadow-sm">
+              <div className="text-yellow-500 text-2xl mb-4">⭐⭐⭐⭐⭐</div>
+              <p className="text-gray-700 mb-4">
+                "Voice-to-text is a game changer!"
+              </p>
+              <p className="text-sm text-gray-500">- Emma R.</p>
             </div>
           </div>
-          <h2 className="text-3xl font-bold mb-3">🔐 Legacy Diary</h2>
-          <p className="text-white/80 mb-2">Single-User Mode</p>
-          <p className="text-sm text-white/60 mb-6">
-            Original password-protected journal. Use the button above for multi-user access.
-          </p>
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 rounded-lg font-semibold group-hover:bg-white/30 transition-colors">
-            Open Legacy Diary →
+        </div>
+      </section>
+      
+      {/* Pricing */}
+      <section className="py-24 bg-gradient-to-br from-purple-600 to-blue-600 text-white">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <h2 className="text-4xl font-bold mb-4">Start Your Journey Today</h2>
+          <p className="text-xl mb-16 opacity-90">Try free for 3 days, then €4.99/month</p>
+          
+          <div className="max-w-md mx-auto bg-white text-gray-900 rounded-3xl p-8">
+            <div className="text-center mb-6">
+              <p className="text-sm text-gray-500 mb-2">Free 3-Day Trial</p>
+              <p className="text-5xl font-bold mb-2">€4.99</p>
+              <p className="text-gray-600">/month</p>
+            </div>
+            <ul className="space-y-3 mb-8 text-left">
+              <li className="flex items-center gap-3"><span className="text-green-500">✓</span> Unlimited entries</li>
+              <li className="flex items-center gap-3"><span className="text-green-500">✓</span> End-to-end encryption</li>
+              <li className="flex items-center gap-3"><span className="text-green-500">✓</span> Photos & voice</li>
+              <li className="flex items-center gap-3"><span className="text-green-500">✓</span> Cloud sync</li>
+              <li className="flex items-center gap-3"><span className="text-green-500">✓</span> All themes</li>
+              <li className="flex items-center gap-3"><span className="text-green-500">✓</span> Cancel anytime</li>
+            </ul>
+            <Link href="/register" className="block w-full bg-purple-600 text-white py-4 rounded-xl font-semibold hover:bg-purple-700">
+              Start Free Trial →
+            </Link>
+            <p className="text-sm text-gray-500 mt-4">No card required</p>
           </div>
-        </motion.button>
-      </motion.div>
-
-      {/* Features Footer */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        className="mt-12 text-center text-white/60 text-sm space-y-2"
-      >
-        <p>✨ Beautiful book reading mode • 🌙 Dark mode • 🏷️ Tags & moods</p>
-        <p>📊 Statistics • 💾 Export & backup • 🔒 Completely offline</p>
-      </motion.div>
-    </div>
+        </div>
+      </section>
+    </main>
   );
 }
