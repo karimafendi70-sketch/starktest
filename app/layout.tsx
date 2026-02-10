@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
-  title: "thequiet - Sobriety & Habit Tracker",
-  description: "Track your sobriety journey and build better habits",
+  title: "Encrypted Journal - Private & Secure",
+  description: "A completely local, encrypted personal journal with no cloud sync",
 };
 
 export default function RootLayout({
@@ -12,8 +13,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="nl" className="dark">
-      <body className="font-sans antialiased">{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className="font-sans antialiased">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
