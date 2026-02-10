@@ -2,13 +2,27 @@
 
 A beautiful, privacy-focused encrypted journal application with multi-user support. Write freely knowing your thoughts are protected with military-grade AES-256 encryption. Completely offline - no cloud, no tracking, no data ever leaves your device.
 
-## 🌐 Try It Live
+## 🚀 GET YOUR LIVE LINK NOW!
 
-Want to see the app in action? Deploy your own instance in seconds:
+**Deploy in 2 minutes and get your own link:**
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/karimafendi70-sketch/starktest)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/karimafendi70-sketch/starktest&project-name=starktest&repository-name=starktest)
 
-Or see the [Quick Deploy Guide](./QUICK_DEPLOY.md) for step-by-step instructions.
+👆 **Click to deploy and get: `https://starktest-xxxxx.vercel.app`**
+
+> 🎉 **FREE** deployment • ✅ **HTTPS** included • 🌍 **Global CDN** • 📱 **Works instantly**
+
+**Need help?** → See [LIVE_LINK.md](./LIVE_LINK.md) for step-by-step deployment guide
+
+---
+
+## 🌐 Alternative: Try It Live
+
+Want to see it in action locally first?
+
+[![Quick Start](https://img.shields.io/badge/Quick_Start-Run_Locally-blue?style=for-the-badge)](./APP_READY.md)
+
+Or see the [Quick Deploy Guide](./QUICK_DEPLOY.md) for more deployment options.
 
 > **Note**: This app stores all data locally in your browser. Each deployment/domain has its own isolated storage.
 
