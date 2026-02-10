@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { JournalEntry } from '@/types/journal.types';
+import { Camera } from 'lucide-react';
 
 export default function EntryCardModern({ entry }: { entry: JournalEntry }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -16,6 +17,9 @@ export default function EntryCardModern({ entry }: { entry: JournalEntry }) {
   const wordCount = useMemo(() => {
     return entry.content.split(/\s+/).filter((w) => w.length > 0).length;
   }, [entry.content]);
+
+  const photoCount = entry.photos?.length || 0;
+  const firstPhoto = entry.photos?.[0];
   
   return (
     <div
@@ -33,8 +37,27 @@ export default function EntryCardModern({ entry }: { entry: JournalEntry }) {
           </div>
           <h3 className="text-xl font-semibold">{entry.title}</h3>
         </div>
-        <div className="text-3xl">{moodEmojis[entry.mood as keyof typeof moodEmojis] || '😊'}</div>
+        <div className="flex items-center gap-2">
+          <div className="text-3xl">{moodEmojis[entry.mood as keyof typeof moodEmojis] || '😊'}</div>
+          {photoCount > 0 && (
+            <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">
+              <Camera className="w-3 h-3" />
+              <span>{photoCount}</span>
+            </div>
+          )}
+        </div>
       </div>
+
+      {/* Photo Thumbnail */}
+      {firstPhoto && (
+        <div className="mb-4">
+          <img
+            src={firstPhoto.url}
+            alt="Entry photo"
+            className="w-full h-48 object-cover rounded-lg"
+          />
+        </div>
+      )}
       
       <p className="text-gray-600 mb-4 line-clamp-2">{entry.content}</p>
       
