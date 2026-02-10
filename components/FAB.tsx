@@ -37,8 +37,7 @@ export default function FAB() {
       
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full shadow-2xl flex items-center justify-center z-50 hover:scale-110 transition-transform"
-        style={{ transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}
+        className={`fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full shadow-2xl flex items-center justify-center z-50 hover:scale-110 transition-all ${isOpen ? 'rotate-45' : 'rotate-0'}`}
       >
         <span className="text-3xl leading-none">+</span>
       </button>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { JournalEntry } from '@/types/journal.types';
 
@@ -12,6 +12,10 @@ export default function EntryCardModern({ entry }: { entry: JournalEntry }) {
     happy: '😊', sad: '😢', excited: '🤩', calm: '😌',
     anxious: '😰', angry: '😠', loved: '🥰', grateful: '🙏', neutral: '😐'
   };
+  
+  const wordCount = useMemo(() => {
+    return entry.content.split(/\s+/).filter((w) => w.length > 0).length;
+  }, [entry.content]);
   
   return (
     <div
@@ -44,7 +48,7 @@ export default function EntryCardModern({ entry }: { entry: JournalEntry }) {
           ))}
         </div>
         <div className="text-sm text-gray-500">
-          {entry.content.split(/\s+/).filter((w) => w.length > 0).length} words
+          {wordCount} words
         </div>
       </div>
       

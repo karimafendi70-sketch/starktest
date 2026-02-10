@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { useUser } from '@/lib/user-context';
 import { useJournal } from '@/lib/journal-context';
 import Link from 'next/link';
@@ -10,6 +10,13 @@ import FAB from '@/components/FAB';
 export default function HomePage() {
   const { currentUser } = useUser();
   const { entries, loading } = useJournal();
+  
+  const totalWords = useMemo(() => {
+    return entries.reduce((sum, e) => {
+      const words = e.content.split(/\s+/).filter((w) => w.length > 0);
+      return sum + words.length;
+    }, 0);
+  }, [entries]);
   
   if (loading) {
     return (
@@ -75,10 +82,6 @@ export default function HomePage() {
   
   // ACTIVE STATE (has entries)
   const recentEntries = entries.slice(0, 3);
-  const totalWords = entries.reduce((sum, e) => {
-    const words = e.content.split(/\s+/).filter((w) => w.length > 0);
-    return sum + words.length;
-  }, 0);
   
   return (
     <>

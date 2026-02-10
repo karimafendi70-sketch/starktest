@@ -2,7 +2,7 @@
 
 export default function LandingPage() {
   return (
-    <div>
+    <main>
       {/* Hero Section - Purple gradient background */}
       <section className="min-h-screen bg-gradient-to-br from-purple-600 to-blue-600 text-white p-6">
         <nav className="flex justify-between items-center mb-20 max-w-6xl mx-auto">
@@ -28,9 +28,9 @@ export default function LandingPage() {
               <a href="/register" className="bg-white text-purple-600 px-8 py-4 rounded-xl font-semibold text-lg hover:scale-105 transition-transform inline-block">
                 Start Free Trial →
               </a>
-              <button className="border-2 border-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-purple-600 transition-all">
-                Watch Demo ▶
-              </button>
+              <a href="#features" className="border-2 border-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-purple-600 transition-all inline-block">
+                Learn More ↓
+              </a>
             </div>
             <p className="text-sm text-purple-200 mt-4">3-day trial, no card required</p>
           </div>
@@ -45,7 +45,7 @@ export default function LandingPage() {
       </section>
       
       {/* Features Section - 3 columns */}
-      <section className="py-24 bg-white">
+      <section id="features" className="py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-16">Why Choose Us?</h2>
           <div className="grid md:grid-cols-3 gap-12">
@@ -137,6 +137,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
