@@ -49,6 +49,7 @@ const MoodIcon = ({ mood, className = "w-5 h-5" }: { mood: MoodType; className?:
     neutral: <Meh className={className} />,
     excited: <Zap className={className} />,
     anxious: <Cloud className={className} />,
+    calm: <Meh className={className} />,
   };
   return icons[mood] || null;
 };

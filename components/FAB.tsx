@@ -27,7 +27,7 @@ export default function FAB() {
       {isOpen && (
         <div className="fixed bottom-24 right-6 z-50 space-y-3">
           <button 
-            onClick={() => router.push('/journal/new')}
+            onClick={() => router.push('/write')}
             className="flex items-center gap-3 bg-white shadow-lg rounded-full px-4 py-3 hover:scale-105 transition-transform"
           >
             <span className="text-2xl">📝</span>
