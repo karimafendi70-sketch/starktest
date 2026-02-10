@@ -30,8 +30,15 @@ import {
   Cloud,
   List,
   Book,
+  Camera,
+  Image,
 } from "lucide-react";
 import { BookView } from "@/components/BookView";
+import { VoiceInput } from "@/components/VoiceInput";
+import { PhotoUpload } from "@/components/PhotoUpload";
+import { CameraCapture } from "@/components/CameraCapture";
+import { WordCounter } from "@/components/WordCounter";
+import { PhotoThumbnail } from "@/components/PhotoThumbnail";
 
 const MoodIcon = ({ mood, className = "w-5 h-5" }: { mood: MoodType; className?: string }) => {
   const icons = {
@@ -63,6 +70,9 @@ export default function JournalPage() {
   const [editorTags, setEditorTags] = useState<string[]>([]);
   const [editorDate, setEditorDate] = useState("");
   const [tagInput, setTagInput] = useState("");
+  const [editorPhotos, setEditorPhotos] = useState<string[]>([]);
+  const [showVoiceInput, setShowVoiceInput] = useState(false);
+  const [showCameraCapture, setShowCameraCapture] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -82,6 +92,7 @@ export default function JournalPage() {
     setEditorMood("neutral");
     setEditorTags([]);
     setEditorDate(new Date().toISOString().split("T")[0]);
+    setEditorPhotos([]);
     setView("editor");
   };
 
@@ -92,6 +103,7 @@ export default function JournalPage() {
     setEditorMood(entry.mood);
     setEditorTags(entry.tags);
     setEditorDate(entry.date);
+    setEditorPhotos([]);
     setView("editor");
   };
 
@@ -149,6 +161,23 @@ export default function JournalPage() {
 
   const handleRemoveTag = (tag: string) => {
     setEditorTags(editorTags.filter((t) => t !== tag));
+  };
+
+  const handleVoiceTranscript = (text: string) => {
+    setEditorContent((prev) => prev + text);
+  };
+
+  const handlePhotosSelected = (photoDataUrls: string[]) => {
+    setEditorPhotos((prev) => [...prev, ...photoDataUrls]);
+  };
+
+  const handlePhotoTaken = (photoDataUrl: string) => {
+    setEditorPhotos((prev) => [...prev, photoDataUrl]);
+    setShowCameraCapture(false);
+  };
+
+  const handleRemovePhoto = (index: number) => {
+    setEditorPhotos((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleExport = async () => {
@@ -575,6 +604,99 @@ export default function JournalPage() {
 
               <div>
                 <label className="block text-sm font-medium mb-2 text-foreground">Content</label>
+                
+                {/* Toolbar with all features */}
+                <div className="mb-3 flex flex-wrap items-center gap-2 p-3 bg-muted rounded-lg border border-border">
+                  <button
+                    onClick={() => setShowVoiceInput(!showVoiceInput)}
+                    className="flex items-center gap-2 px-3 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm"
+                    title="Voice to Text"
+                  >
+                    🎤 Voice
+                  </button>
+                  
+                  <button
+                    onClick={() => {
+                      const input = document.createElement('input');
+                      input.type = 'file';
+                      input.accept = 'image/*';
+                      input.multiple = true;
+                      input.onchange = async (e) => {
+                        const files = (e.target as HTMLInputElement).files;
+                        if (files) {
+                          const dataUrls: string[] = [];
+                          for (let i = 0; i < files.length; i++) {
+                            const reader = new FileReader();
+                            reader.onload = (event) => {
+                              if (event.target?.result) {
+                                dataUrls.push(event.target.result as string);
+                                if (dataUrls.length === files.length) {
+                                  handlePhotosSelected(dataUrls);
+                                }
+                              }
+                            };
+                            reader.readAsDataURL(files[i]);
+                          }
+                        }
+                      };
+                      input.click();
+                    }}
+                    className="flex items-center gap-2 px-3 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm"
+                    title="Upload Photos"
+                  >
+                    📸 Upload
+                  </button>
+                  
+                  <button
+                    onClick={() => setShowCameraCapture(true)}
+                    className="flex items-center gap-2 px-3 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm"
+                    title="Take Photo"
+                  >
+                    📷 Camera
+                  </button>
+                  
+                  <div className="ml-auto">
+                    <WordCounter text={editorContent} />
+                  </div>
+                </div>
+
+                {/* Voice Input Panel */}
+                {showVoiceInput && (
+                  <div className="mb-3 p-4 bg-card border border-border rounded-lg">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-medium text-foreground">Voice to Text</h4>
+                      <button
+                        onClick={() => setShowVoiceInput(false)}
+                        className="text-muted-foreground hover:text-foreground"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <VoiceInput onTranscript={handleVoiceTranscript} />
+                  </div>
+                )}
+
+                {/* Camera Capture Modal */}
+                {showCameraCapture && (
+                  <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-6">
+                    <div className="bg-card border border-border rounded-xl p-6 w-full max-w-2xl">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-bold text-foreground">Take Photo</h3>
+                        <button
+                          onClick={() => setShowCameraCapture(false)}
+                          className="p-2 hover:bg-accent rounded-lg transition-colors"
+                        >
+                          <X className="w-5 h-5" />
+                        </button>
+                      </div>
+                      <CameraCapture
+                        onCapture={handlePhotoTaken}
+                        onClose={() => setShowCameraCapture(false)}
+                      />
+                    </div>
+                  </div>
+                )}
+                
                 <textarea
                   value={editorContent}
                   onChange={(e) => setEditorContent(e.target.value)}
@@ -583,6 +705,33 @@ export default function JournalPage() {
                   className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none text-foreground"
                 />
               </div>
+
+              {/* Photo Preview Grid */}
+              {editorPhotos.length > 0 && (
+                <div>
+                  <label className="block text-sm font-medium mb-2 text-foreground">
+                    Photos ({editorPhotos.length})
+                  </label>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
+                    {editorPhotos.map((photo, index) => (
+                      <div key={index} className="relative group">
+                        <img
+                          src={photo}
+                          alt={`Photo ${index + 1}`}
+                          className="w-full h-24 object-cover rounded-lg border border-border"
+                        />
+                        <button
+                          onClick={() => handleRemovePhoto(index)}
+                          className="absolute top-1 right-1 p-1 bg-destructive text-destructive-foreground rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Remove photo"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div>
                 <label className="block text-sm font-medium mb-2 text-foreground">Tags</label>
