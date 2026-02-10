@@ -79,7 +79,6 @@ export default function HomePage() {
     const words = e.content.split(/\s+/).filter((w) => w.length > 0);
     return sum + words.length;
   }, 0);
-  const totalPhotos = 0; // Photos feature not yet implemented in entries
   
   return (
     <>
@@ -88,10 +87,6 @@ export default function HomePage() {
           <div className="mb-8">
             <div className="flex items-center justify-between mb-6">
               <h1 className="text-4xl font-bold">Welcome back, {currentUser?.username || 'there'}! 👋</h1>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-orange-500">🔥 0</div>
-                <div className="text-sm text-gray-600">Day Streak</div>
-              </div>
             </div>
             
             <div className="grid md:grid-cols-2 gap-4">
@@ -110,12 +105,16 @@ export default function HomePage() {
                     <span className="font-semibold">{entries.length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">📸 Photos</span>
-                    <span className="font-semibold">{totalPhotos}</span>
-                  </div>
-                  <div className="flex justify-between">
                     <span className="text-gray-600">✍️ Words</span>
                     <span className="font-semibold">{totalWords.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">📅 This Month</span>
+                    <span className="font-semibold">{entries.filter(e => {
+                      const entryDate = new Date(e.createdAt);
+                      const now = new Date();
+                      return entryDate.getMonth() === now.getMonth() && entryDate.getFullYear() === now.getFullYear();
+                    }).length}</span>
                   </div>
                 </div>
               </div>

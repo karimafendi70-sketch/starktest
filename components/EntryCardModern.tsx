@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { JournalEntry } from '@/types/journal.types';
 
-export default function EntryCardModern({ entry }: { entry: any }) {
+export default function EntryCardModern({ entry }: { entry: JournalEntry }) {
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
   
@@ -43,7 +44,7 @@ export default function EntryCardModern({ entry }: { entry: any }) {
           ))}
         </div>
         <div className="text-sm text-gray-500">
-          {entry.wordCount || 0} words
+          {entry.content.split(/\s+/).filter((w) => w.length > 0).length} words
         </div>
       </div>
       
