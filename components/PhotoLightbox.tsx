@@ -99,7 +99,7 @@ export function PhotoLightbox({
           onClick={(e) => e.stopPropagation()}
         >
           <img
-            src={currentPhoto.encryptedData}
+            src={currentPhoto.dataUrl}
             alt={currentPhoto.caption || 'Photo'}
             className="w-full h-full object-contain rounded-lg"
           />

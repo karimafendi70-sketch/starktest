@@ -126,7 +126,7 @@ export function PhotoGallery() {
                   onClick={() => setSelectedIndex(index)}
                 >
                   <img
-                    src={photo.encryptedThumbnail}
+                    src={photo.thumbnailUrl}
                     alt={photo.caption || 'Photo'}
                     className="w-full h-full object-cover rounded-lg shadow-md transition-transform group-hover:scale-105"
                   />

@@ -6,8 +6,8 @@ export interface Photo {
   id: string;
   userId: string;
   entryId: string;
-  encryptedData: string; // base64 encoded encrypted photo
-  encryptedThumbnail: string; // base64 encoded encrypted thumbnail
+  dataUrl: string; // Decrypted photo data URL
+  thumbnailUrl: string; // Decrypted thumbnail data URL
   caption?: string;
   timestamp: string; // ISO date string
   metadata: PhotoMetadata;

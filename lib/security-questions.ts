@@ -87,6 +87,7 @@ export function hasSecurityQuestions(userId: string): boolean {
 
 /**
  * Select random questions for recovery (2 out of 3)
+ * Uses Fisher-Yates shuffle for proper randomization
  */
 export function selectRecoveryQuestions(
   questions: SecurityQuestions
@@ -97,7 +98,11 @@ export function selectRecoveryQuestions(
     { index: 3, question: questions.question3.question },
   ];
 
-  // Shuffle and select 2
-  const shuffled = allQuestions.sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, 2);
+  // Fisher-Yates shuffle
+  for (let i = allQuestions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [allQuestions[i], allQuestions[j]] = [allQuestions[j], allQuestions[i]];
+  }
+
+  return allQuestions.slice(0, 2);
 }

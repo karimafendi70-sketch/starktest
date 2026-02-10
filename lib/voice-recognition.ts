@@ -8,8 +8,28 @@ export interface VoiceRecognitionOptions {
   interimResults?: boolean;
 }
 
+// Type for Speech Recognition
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognitionResultList {
+  length: number;
+  [index: number]: SpeechRecognitionResult;
+}
+
+interface SpeechRecognitionResult {
+  [index: number]: SpeechRecognitionAlternative;
+  isFinal: boolean;
+}
+
+interface SpeechRecognitionAlternative {
+  transcript: string;
+  confidence: number;
+}
+
 export class VoiceRecognition {
-  private recognition: any;
+  private recognition: any; // Using any for browser compatibility
   private isSupported: boolean;
   
   constructor() {
