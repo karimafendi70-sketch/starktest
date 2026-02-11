@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { useJournal } from '@/lib/journal-context';
@@ -19,7 +19,7 @@ const MoodColors: Record<MoodType, string> = {
 };
 
 const MoodIcon = ({ mood, className = 'w-4 h-4' }: { mood: MoodType; className?: string }) => {
-  const icons: Record<MoodType, JSX.Element> = {
+  const icons: Record<MoodType, React.ReactNode> = {
     happy: <Smile className={className} />,
     sad: <Frown className={className} />,
     neutral: <Meh className={className} />,

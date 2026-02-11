@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { useJournal } from '@/lib/journal-context';
@@ -27,7 +27,7 @@ import { format } from 'date-fns';
 import toast, { Toaster } from 'react-hot-toast';
 
 const MoodIcon = ({ mood, className = 'w-6 h-6' }: { mood: string; className?: string }) => {
-  const icons: Record<string, JSX.Element> = {
+  const icons: Record<string, React.ReactNode> = {
     happy: <Smile className={className} />,
     sad: <Frown className={className} />,
     neutral: <Meh className={className} />,
