@@ -6,6 +6,8 @@ import { useAuth } from '@/lib/auth-context';
 import { useJournal } from '@/lib/journal-context';
 import { JournalEntry, MoodType } from '@/types/journal.types';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { Navbar } from '@/components/Navbar';
+import { MobileBottomNav } from '@/components/MobileBottomNav';
 import { ChevronLeft, ChevronRight, X, Smile, Frown, Meh, Zap, Cloud } from 'lucide-react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isSameMonth, isToday, addMonths, subMonths } from 'date-fns';
 import toast, { Toaster } from 'react-hot-toast';
@@ -172,6 +174,7 @@ export default function CalendarPage() {
 
   return (
     <div className="min-h-screen bg-background dark:bg-gray-900">
+      <Navbar />
       <Toaster position="top-right" />
 
       <div className="max-w-6xl mx-auto px-4 py-8">
@@ -309,6 +312,8 @@ export default function CalendarPage() {
           onEntryClick={handleEntryClick}
         />
       )}
+      
+      <MobileBottomNav />
     </div>
   );
 }

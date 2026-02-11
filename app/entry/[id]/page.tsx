@@ -8,6 +8,8 @@ import { JournalEntry } from '@/types/journal.types';
 import { DeleteConfirmModal } from '@/components/DeleteConfirmModal';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { PhotoLightbox } from '@/components/PhotoLightbox';
+import { Navbar } from '@/components/Navbar';
+import { MobileBottomNav } from '@/components/MobileBottomNav';
 import {
   ArrowLeft,
   Edit,
@@ -153,6 +155,7 @@ export default function EntryDetailPage() {
 
   return (
     <div className="min-h-screen bg-background dark:bg-gray-900">
+      <Navbar />
       <Toaster position="top-right" />
       
       {/* Header */}
@@ -284,6 +287,8 @@ export default function EntryDetailPage() {
         onConfirm={handleDelete}
         entryTitle={entry.title}
       />
+      
+      <MobileBottomNav />
     </div>
   );
 }

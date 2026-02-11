@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { useTheme } from '@/lib/theme-context';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { Navbar } from '@/components/Navbar';
+import { MobileBottomNav } from '@/components/MobileBottomNav';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { exportData, importData, deleteAllData } from '@/lib/db';
 import {
@@ -148,6 +150,7 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-background dark:bg-gray-900">
+      <Navbar />
       <Toaster position="top-right" />
 
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -363,6 +366,8 @@ export default function SettingsPage() {
           </div>
         </div>
       </div>
+      
+      <MobileBottomNav />
     </div>
   );
 }

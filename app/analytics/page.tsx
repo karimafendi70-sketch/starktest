@@ -6,6 +6,8 @@ import { useAuth } from '@/lib/auth-context';
 import { useJournal } from '@/lib/journal-context';
 import { MoodType } from '@/types/journal.types';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { Navbar } from '@/components/Navbar';
+import { MobileBottomNav } from '@/components/MobileBottomNav';
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { Smile, Frown, Meh, Zap, Cloud, TrendingUp, Calendar, BookOpen, Hash } from 'lucide-react';
 import { format, startOfDay, subDays, differenceInDays } from 'date-fns';
@@ -181,6 +183,7 @@ export default function AnalyticsPage() {
 
   return (
     <div className="min-h-screen bg-background dark:bg-gray-900">
+      <Navbar />
       <Toaster position="top-right" />
 
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -352,6 +355,8 @@ export default function AnalyticsPage() {
           </div>
         </div>
       </div>
+      
+      <MobileBottomNav />
     </div>
   );
 }
