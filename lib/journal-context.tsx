@@ -257,6 +257,7 @@ export function JournalProvider({ children }: { children: React.ReactNode }) {
       neutral: 0,
       excited: 0,
       anxious: 0,
+      calm: 0,
     };
 
     entries.forEach((entry) => {
