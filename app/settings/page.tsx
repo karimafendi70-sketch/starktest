@@ -232,12 +232,18 @@ export default function SettingsPage() {
                         Accent Color
                       </label>
                       <div className="flex gap-3">
-                        {['purple', 'blue', 'green', 'pink', 'orange'].map((color) => (
+                        {[
+                          { name: 'purple', class: 'bg-purple-500' },
+                          { name: 'blue', class: 'bg-blue-500' },
+                          { name: 'green', class: 'bg-green-500' },
+                          { name: 'pink', class: 'bg-pink-500' },
+                          { name: 'orange', class: 'bg-orange-500' },
+                        ].map(({ name, class: bgClass }) => (
                           <button
-                            key={color}
-                            onClick={() => setAccentColor(color)}
-                            className={`w-12 h-12 rounded-lg bg-${color}-500 hover:scale-110 transition-transform ${
-                              accentColor === color ? 'ring-4 ring-offset-2 ring-gray-400 dark:ring-gray-600' : ''
+                            key={name}
+                            onClick={() => setAccentColor(name)}
+                            className={`w-12 h-12 rounded-lg ${bgClass} hover:scale-110 transition-transform ${
+                              accentColor === name ? 'ring-4 ring-offset-2 ring-gray-400 dark:ring-gray-600' : ''
                             }`}
                           />
                         ))}

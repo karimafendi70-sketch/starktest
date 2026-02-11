@@ -9,10 +9,10 @@ export default function FAB() {
   const router = useRouter();
   
   const menuItems = [
-    { icon: '📝', label: 'New Entry', path: '/journal', action: () => router.push('/journal') },
-    { icon: '📅', label: 'Calendar', path: '/calendar', action: () => router.push('/calendar') },
-    { icon: '📊', label: 'Analytics', path: '/analytics', action: () => router.push('/analytics') },
-    { icon: '⚙️', label: 'Settings', path: '/settings', action: () => router.push('/settings') },
+    { icon: '📝', label: 'New Entry', path: '/journal' },
+    { icon: '📅', label: 'Calendar', path: '/calendar' },
+    { icon: '📊', label: 'Analytics', path: '/analytics' },
+    { icon: '⚙️', label: 'Settings', path: '/settings' },
   ];
   
   return (
@@ -38,7 +38,7 @@ export default function FAB() {
             <button 
               key={item.path}
               onClick={() => {
-                item.action();
+                router.push(item.path);
                 setIsOpen(false);
               }}
               className="flex items-center gap-3 bg-white dark:bg-gray-800 shadow-lg rounded-full px-4 py-3 hover:scale-105 transition-transform animate-fade-in"
