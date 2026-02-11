@@ -92,3 +92,37 @@
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+/* Smooth transitions for dark mode - applied to specific elements */
+.dark-mode-transition {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Apply to common elements that need dark mode transitions */
+body,
+nav,
+header,
+main,
+footer,
+div[class*="bg-"],
+button,
+input,
+select,
+textarea {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}

@@ -2,10 +2,18 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Plus, BookOpen, Calendar, BarChart3, Settings } from 'lucide-react';
 
 export default function FAB() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  
+  const menuItems = [
+    { icon: '📝', label: 'New Entry', path: '/journal' },
+    { icon: '📅', label: 'Calendar', path: '/calendar' },
+    { icon: '📊', label: 'Analytics', path: '/analytics' },
+    { icon: '⚙️', label: 'Settings', path: '/settings' },
+  ];
   
   return (
     <>
@@ -26,29 +34,31 @@ export default function FAB() {
       
       {isOpen && (
         <div className="fixed bottom-24 right-6 z-50 space-y-3">
-          <button 
-            onClick={() => router.push('/journal/new')}
-            className="flex items-center gap-3 bg-white shadow-lg rounded-full px-4 py-3 hover:scale-105 transition-transform"
-          >
-            <span className="text-2xl">📝</span>
-            <span className="font-medium pr-2">New Entry</span>
-          </button>
-          <button 
-            onClick={() => router.push('/journal')}
-            className="flex items-center gap-3 bg-white shadow-lg rounded-full px-4 py-3 hover:scale-105 transition-transform"
-          >
-            <span className="text-2xl">📅</span>
-            <span className="font-medium pr-2">View All</span>
-          </button>
+          {menuItems.map((item, index) => (
+            <button 
+              key={item.path}
+              onClick={() => {
+                router.push(item.path);
+                setIsOpen(false);
+              }}
+              className="flex items-center gap-3 bg-white dark:bg-gray-800 shadow-lg rounded-full px-4 py-3 hover:scale-105 transition-transform animate-fade-in"
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
+              <span className="text-2xl">{item.icon}</span>
+              <span className="font-medium pr-2 text-gray-900 dark:text-white">{item.label}</span>
+            </button>
+          ))}
         </div>
       )}
       
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full shadow-2xl flex items-center justify-center z-50 hover:scale-110 transition-all ${isOpen ? 'rotate-45' : 'rotate-0'}`}
+        className={`fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full shadow-2xl flex items-center justify-center z-50 hover:scale-110 transition-all ${isOpen ? 'rotate-45' : 'rotate-0'}`}
+        aria-label={isOpen ? 'Close menu' : 'Open menu'}
       >
-        <span className="text-3xl leading-none">+</span>
+        <Plus className="w-8 h-8" />
       </button>
     </>
   );
 }
+

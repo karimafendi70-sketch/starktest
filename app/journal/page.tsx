@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { useJournal } from "@/lib/journal-context";
 import { useTheme } from "@/lib/theme-context";
@@ -55,6 +55,7 @@ const MoodIcon = ({ mood, className = "w-5 h-5" }: { mood: MoodType; className?:
 
 export default function JournalPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { isAuthenticated, logout } = useAuth();
   const { entries, loading, addEntry, updateEntry, removeEntry, searchEntries, filterByTag, getStats } = useJournal();
   const { theme, toggleTheme } = useTheme();
@@ -81,6 +82,17 @@ export default function JournalPage() {
       router.push("/journal/login");
     }
   }, [isAuthenticated, router]);
+
+  // Handle edit parameter from URL
+  useEffect(() => {
+    const editId = searchParams.get('edit');
+    if (editId && entries.length > 0) {
+      const entryToEdit = entries.find(e => e.id === editId);
+      if (entryToEdit) {
+        handleEditEntry(entryToEdit);
+      }
+    }
+  }, [searchParams, entries]);
 
   const handleLogout = () => {
     logout();
