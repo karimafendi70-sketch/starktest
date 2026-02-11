@@ -199,11 +199,18 @@ export default function WritePage() {
 
     setIsSaving(true);
     try {
+      // Parse any remaining tags from tagInput if it has text
+      let finalTags = [...form.tags];
+      if (tagInput.trim()) {
+        const additionalTags = tagInput.split(',').map(t => t.trim()).filter(t => t && !finalTags.includes(t));
+        finalTags = [...finalTags, ...additionalTags];
+      }
+
       await addEntry({
         title: form.title,
         content: form.content,
         mood: form.mood,
-        tags: form.tags,
+        tags: finalTags,
         date: form.date.toISOString(),
         photos: form.photos,
         wordCount: form.content.split(/\s+/).filter(w => w.length > 0).length,
