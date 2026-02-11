@@ -18,6 +18,7 @@ const MoodColors: Record<MoodType, string> = {
   neutral: 'bg-gray-500',
   excited: 'bg-pink-500',
   anxious: 'bg-orange-500',
+  calm: 'bg-purple-500',
 };
 
 const MoodIcon = ({ mood, className = 'w-4 h-4' }: { mood: MoodType; className?: string }) => {
@@ -27,6 +28,7 @@ const MoodIcon = ({ mood, className = 'w-4 h-4' }: { mood: MoodType; className?:
     neutral: <Meh className={className} />,
     excited: <Zap className={className} />,
     anxious: <Cloud className={className} />,
+    calm: <Cloud className={className} />,
   };
   return icons[mood];
 };

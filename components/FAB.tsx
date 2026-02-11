@@ -9,7 +9,7 @@ export default function FAB() {
   const router = useRouter();
   
   const menuItems = [
-    { icon: '📝', label: 'New Entry', path: '/journal' },
+    { icon: '📝', label: 'New Entry', path: '/write' },
     { icon: '📅', label: 'Calendar', path: '/calendar' },
     { icon: '📊', label: 'Analytics', path: '/analytics' },
     { icon: '⚙️', label: 'Settings', path: '/settings' },

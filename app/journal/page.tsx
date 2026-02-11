@@ -43,12 +43,13 @@ import { StreakCounter } from "@/components/StreakCounter";
 import { CalendarHeatmap } from "@/components/CalendarHeatmap";
 
 const MoodIcon = ({ mood, className = "w-5 h-5" }: { mood: MoodType; className?: string }) => {
-  const icons = {
+  const icons: Record<MoodType, React.ReactNode> = {
     happy: <Smile className={className} />,
     sad: <Frown className={className} />,
     neutral: <Meh className={className} />,
     excited: <Zap className={className} />,
     anxious: <Cloud className={className} />,
+    calm: <Cloud className={className} />,
   };
   return icons[mood] || null;
 };

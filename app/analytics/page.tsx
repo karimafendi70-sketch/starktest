@@ -19,6 +19,7 @@ const MoodColors: Record<MoodType, string> = {
   neutral: '#6b7280',
   excited: '#ec4899',
   anxious: '#f97316',
+  calm: '#8b5cf6',
 };
 
 const MoodIcon = ({ mood, className = 'w-5 h-5' }: { mood: MoodType; className?: string }) => {
@@ -28,6 +29,7 @@ const MoodIcon = ({ mood, className = 'w-5 h-5' }: { mood: MoodType; className?:
     neutral: <Meh className={className} />,
     excited: <Zap className={className} />,
     anxious: <Cloud className={className} />,
+    calm: <Cloud className={className} />,
   };
   return icons[mood];
 };
@@ -58,6 +60,7 @@ export default function AnalyticsPage() {
     neutral: 0,
     excited: 0,
     anxious: 0,
+    calm: 0,
   };
 
   entries.forEach((entry) => {
@@ -128,6 +131,7 @@ export default function AnalyticsPage() {
       const moodValues: Record<MoodType, number> = {
         happy: 5,
         excited: 4,
+        calm: 3.5,
         neutral: 3,
         anxious: 2,
         sad: 1,
