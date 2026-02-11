@@ -142,7 +142,7 @@ export default function HomePage() {
   }
   
   // ACTIVE STATE (has entries)
-  const recentEntries = filteredAndSortedEntries.slice(0, 10);
+  const displayedEntries = filteredAndSortedEntries.slice(0, 10);
   const hasActiveFilters = searchTerm !== '' || selectedMood !== 'all' || sortBy !== 'newest';
   
   return (
@@ -267,7 +267,7 @@ export default function HomePage() {
               </div>
             ) : (
               <div className="space-y-4">
-                {recentEntries.map(entry => (
+                {displayedEntries.map(entry => (
                   <EntryCardModern key={entry.id} entry={entry} />
                 ))}
               </div>

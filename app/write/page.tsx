@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useJournal } from '@/lib/journal-context';
 import { MoodType } from '@/types/journal.types';
@@ -56,6 +56,15 @@ export default function WritePage() {
     }
   }, [form.content]);
 
+  const saveDraft = useCallback(() => {
+    const draft = {
+      ...form,
+      date: form.date.toISOString(),
+    };
+    localStorage.setItem('draft_entry', JSON.stringify(draft));
+    setLastSavedAt(new Date());
+  }, [form]);
+
   // Load draft from localStorage on mount
   useEffect(() => {
     const savedDraft = localStorage.getItem('draft_entry');
@@ -85,7 +94,7 @@ export default function WritePage() {
         clearInterval(autoSaveInterval.current);
       }
     };
-  }, [form, hasUnsavedChanges]);
+  }, [saveDraft, hasUnsavedChanges]);
 
   // Warn before leaving with unsaved changes
   useEffect(() => {
@@ -100,14 +109,14 @@ export default function WritePage() {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [hasUnsavedChanges]);
 
-  const saveDraft = () => {
-    const draft = {
-      ...form,
-      date: form.date.toISOString(),
-    };
-    localStorage.setItem('draft_entry', JSON.stringify(draft));
-    setLastSavedAt(new Date());
-  };
+  // Memoized word and character counts
+  const wordCount = useMemo(() => {
+    return form.content.split(/\s+/).filter(w => w.length > 0).length;
+  }, [form.content]);
+
+  const charCount = useMemo(() => {
+    return form.content.length;
+  }, [form.content]);
 
   const restoreDraft = () => {
     const draft = (window as any).__tempDraft;
@@ -213,7 +222,7 @@ export default function WritePage() {
         tags: finalTags,
         date: form.date.toISOString(),
         photos: form.photos,
-        wordCount: form.content.split(/\s+/).filter(w => w.length > 0).length,
+        wordCount: wordCount,
       });
 
       // Clear draft
@@ -237,9 +246,6 @@ export default function WritePage() {
     }
     router.push('/home');
   };
-
-  const wordCount = form.content.split(/\s+/).filter(w => w.length > 0).length;
-  const charCount = form.content.length;
 
   return (
     <>
