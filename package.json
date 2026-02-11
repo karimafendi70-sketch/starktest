@@ -1,1 +1,31 @@
+<<<<<<< HEAD
 {\n  \"name\": \"thequiet\",\n  \"version\": \"0.1.0\",\n  \"description\": \"Sobriety & Habit Tracking App\",\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\",\n    \"lint\": \"next lint\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/karimafendi70-sketch/starktest.git\"\n  },\n  \"keywords\": [\n    \"sobriety\",\n    \"habit tracking\",\n    \"app\"\n  ],\n  \"author\": \"Your Name\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/karimafendi70-sketch/starktest/issues\"\n  },\n  \"homepage\": \"https://github.com/karimafendi70-sketch/starktest#readme\",\n  \"dependencies\": {\n    \"@supabase/supabase-js\": \"^2.95.3\",\n    \"@types/node\": \"^25.2.2\",\n    \"@types/react\": \"^19.2.13\",\n    \"@types/react-dom\": \"^19.2.3\",\n    \"class-variance-authority\": \"^0.7.1\",\n    \"clsx\": \"^2.1.1\",\n    \"date-fns\": \"^4.1.0\",\n    \"emoji-picker-react\": \"^4.18.0\",\n    \"framer-motion\": \"^12.33.0\",\n    \"lucide-react\": \"^0.563.0\",\n    \"next\": \"^16.1.6\",\n    \"next-themes\": \"^0.4.6\",\n    \"react\": \"^19.2.4\",\n    \"react-dom\": \"^19.2.4\",\n    \"react-hot-toast\": \"^2.6.0\",\n    \"recharts\": \"^3.7.0\",\n    \"tailwind-merge\": \"^3.4.0\",\n    \"typescript\": \"^5.9.3\",\n    \"use-debounce\": \"^10.1.0\",\n    \"@huggingface/inference\": \"^2.6.0\"\n  },\n  \"devDependencies\": {\n    \"autoprefixer\": \"^10.4.24\",\n    \"postcss\": \"^8.5.6\",\n    \"tailwindcss\": \"^3.4.19\"\n  }\n}
+  "@huggingface/inference": "^4.13.12",
+  "@supabase/supabase-js": "^2.95.3",
+  "@types/node": "^25.2.2",
+  "@types/react": "^19.2.13",
+  "@types/react-dom": "^19.2.3",
+  "class-variance-authority": "^0.7.1",
+  "clsx": "^2.1.1",
+  "date-fns": "^4.1.0",
+  "emoji-picker-react": "^4.18.0",
+  "framer-motion": "^12.33.0",
+  "lucide-react": "^0.563.0",
+  "next": "^16.1.6",
+  "next-themes": "^0.4.6",
+  "react": "^19.2.4",
+  "react-dom": "^19.2.4",
+  "react-hot-toast": "^2.6.0",
+  "recharts": "^3.7.0",
+  "tailwind-merge": "^3.4.0",
+  "typescript": "^5.9.3",
+  "use-debounce": "^10.1.0"
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.24",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19"
+  }
+}
+>>>>>>> 47bdf30 (AI integratie en layout-afbeelding voltooid)

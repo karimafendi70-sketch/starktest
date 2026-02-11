@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 'use client';
 
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
@@ -464,3 +465,61 @@ export default function WritePage() {
       </div> 
     </>
 }
+=======
+import React from 'react';
+import AISentimentBar from '../../components/AISentimentBar';
+import AIWritingPanel from '../../components/AIWritingPanel';
+
+// Dummy toast fallback (vervang door jouw eigen toast implementatie indien nodig)
+const toast = {
+  success: (msg: string) => alert(msg),
+};
+
+export default function WritePage() {
+  const [form, setForm] = React.useState({ content: '', tags: [], mood: '' });
+  const [hasUnsavedChanges, setHasUnsavedChanges] = React.useState(false);
+
+  // Voeg unieke tag toe
+  function handleAITagSuggest(tag: string) {
+    setForm((prev) => {
+      if (prev.tags.includes(tag)) return prev;
+      return { ...prev, tags: [...prev.tags, tag] };
+    });
+    setHasUnsavedChanges(true);
+    toast.success('Tag toegevoegd door AI!');
+  }
+
+  return (
+    <div className="max-w-2xl mx-auto p-6">
+      <textarea
+        className="w-full border rounded p-3 mb-4"
+        rows={8}
+        value={form.content}
+        onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
+        placeholder="Schrijf hier je journal..."
+      />
+      {/* Hier zou je VoiceRecorder kunnen plaatsen */}
+      <AISentimentBar
+        content={form.content}
+        onMoodSuggest={(mood) => {
+          setForm(f => ({ ...f, mood }));
+          setHasUnsavedChanges(true);
+          toast.success('Mood updated by AI!');
+        }}
+      />
+      <AIWritingPanel
+        content={form.content}
+        onTagSuggest={handleAITagSuggest}
+      />
+      <div className="mt-4">
+        <div className="font-semibold mb-1">Tags:</div>
+        <div className="flex flex-wrap gap-2">
+          {form.tags.map((tag) => (
+            <span key={tag} className="px-2 py-1 bg-blue-100 rounded text-xs">{tag}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+>>>>>>> 47bdf30 (AI integratie en layout-afbeelding voltooid)

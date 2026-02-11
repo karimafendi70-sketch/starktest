@@ -29,6 +29,14 @@ export default function RootLayout({
         <Providers>
           <TrialBannerWrapper />
           <Header />
+          <div className="w-full flex justify-center mt-4 mb-6">
+            <img
+              src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+              alt="Nature journal inspiration"
+              className="rounded-xl shadow-lg max-h-56 object-cover"
+              style={{ width: '90%', maxWidth: 900 }}
+            />
+          </div>
           {children}
         </Providers>
       </body>
