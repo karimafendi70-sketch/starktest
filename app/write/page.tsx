@@ -1,37 +1,43 @@
-import VoiceRecorder from '@/components/VoiceRecorder';
+'use client';
+
+import React, { useState } from 'react';
+import VoiceRecorder from './VoiceRecorder';
 
 interface EntryForm {
-  title: string;
-  content: string;
-  mood: MoodType;
-  tags: string[];
-  photos: string[];
-  audio?: { blob: Blob; duration: number; url: string; };
-  date: Date;
+    audio: string;
+    // other fields...
 }
 
-const handleVoiceTranscription = (text: string) => {
-  setForm(prev => ({
-    ...prev,
-    content: prev.content + (prev.content ? ' ' : '') + text,
-  }));
-  setHasUnsavedChanges(true);
+const WritePage: React.FC = () => {
+    const [entry, setEntry] = useState<EntryForm>({ audio: '' });
+    const [isRecording, setIsRecording] = useState(false);
+
+    const handleVoiceTranscription = (transcription: string) => {
+        setEntry(prevEntry => ({ ...prevEntry, audio: transcription }));
+    };
+
+    const handleAudioSave = (audioBlob: Blob) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setEntry(prevEntry => ({ ...prevEntry, audio: reader.result as string }));
+        };
+        reader.readAsDataURL(audioBlob);
+    };
+
+    return (
+        <div>
+            <h1>Main Editor</h1>
+            <VoiceRecorder 
+                onTranscribe={handleVoiceTranscription} 
+                onSave={handleAudioSave} 
+                isRecording={isRecording} 
+                setIsRecording={setIsRecording} 
+            />
+            <h2>Additional Editor Components</h2>
+            <p>Additional content goes here...</p>
+            <div>Bottom Bar</div>
+        </div>
+    );
 };
 
-const handleAudioSave = async (audioBlob: Blob, duration: number) => {
-  const url = URL.createObjectURL(audioBlob);
-  setForm(prev => ({
-    ...prev,
-    audio: { blob: audioBlob, duration, url },
-  }));
-  setHasUnsavedChanges(true);
-  toast.success('🎤 Voice note saved!');
-};
-
-{/* Voice Recorder */}
-<div className="mb-6">
-  <VoiceRecorder
-    onTranscription={handleVoiceTranscription}
-    onAudioSave={handleAudioSave}
-  />
-</div>
+export default WritePage;
